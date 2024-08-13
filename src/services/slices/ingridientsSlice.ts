@@ -1,6 +1,7 @@
 import { getIngredientsApi } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
+import { useSelector } from '../store';
 
 export interface IngredientsState {
   ingridients: TIngredient[];
@@ -41,12 +42,18 @@ const ingredientsSlice = createSlice({
 
 export const getIngredients = createAsyncThunk(
   'ingridients/getIngredients',
-  async () => {
-    const response = await getIngredientsApi();
-    console.log(1);
-    return response;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await getIngredientsApi();
+      return response;
+    } catch (error) {
+      return rejectWithValue('Ошибка при получении ингредиентов');
+    }
   }
 );
+
+export const selectIngredient = (id: string | undefined) =>
+  useSelector(selectIngridients).find((ingredient) => ingredient._id === id);
 
 export const { selectIngridients, selectIsLoading } =
   ingredientsSlice.selectors;

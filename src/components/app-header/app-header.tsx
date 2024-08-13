@@ -5,6 +5,5 @@ import { Outlet } from 'react-router-dom';
 export const AppHeader: FC = () => (
   <>
     <AppHeaderUI userName='' />
-    <Outlet />
   </>
 );

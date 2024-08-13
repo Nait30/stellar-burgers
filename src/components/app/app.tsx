@@ -17,6 +17,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingridientsSlice';
+import { getFeed } from '../../services/slices/feedSlice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -34,17 +35,16 @@ const App = () => {
 
   return (
     <div className={styles.app}>
+      <AppHeader />
       <Routes location={backgroundLocation || location}>
-        <Route path='/' element={<AppHeader />}>
-          <Route index element={<ConstructorPage />} />
-          <Route path='feed' element={<Feed />} />
-          <Route path='login' element={<Login />} />
-          <Route path='register' element={<Register />} />
-          <Route path='forgot-password' element={<ForgotPassword />} />
-          <Route path='reset-password' element={<ResetPassword />} />
-          <Route path='profile' element={<Profile />} />
-          <Route path='profile/orders' element={<ProfileOrders />} />
-        </Route>
+        <Route index element={<ConstructorPage />} />
+        <Route path='feed' element={<Feed />} />
+        <Route path='login' element={<Login />} />
+        <Route path='register' element={<Register />} />
+        <Route path='forgot-password' element={<ForgotPassword />} />
+        <Route path='reset-password' element={<ResetPassword />} />
+        <Route path='profile' element={<Profile />} />
+        <Route path='profile/orders' element={<ProfileOrders />} />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
       {backgroundLocation && (

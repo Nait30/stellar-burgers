@@ -12,7 +12,7 @@ import {
 } from '../../services/slices/ingridientsSlice';
 
 export const ConstructorPage: FC = () => {
-  const isIngredientsLoading = true;
+  const isIngredientsLoading = useSelector(selectIsLoading);
 
   /** TODO: взять переменную из стора */
 
