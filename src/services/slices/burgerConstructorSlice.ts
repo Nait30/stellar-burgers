@@ -1,12 +1,13 @@
 import { orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TOrder } from '@utils-types';
+import { TConstructorIngredient, TIngredient, TOrder } from '@utils-types';
 import { useSelector } from '../store';
 
 export interface BurgerConstructorState {
   constructorItems: {
-  bun: TConstructorIngredient | null;
-  ingredients: TConstructorIngredient[];}
+    bun: TConstructorIngredient | null;
+    ingredients: TConstructorIngredient[];
+  };
   orderRequest: boolean;
   orderModalData: TOrder | null;
   error: null | string;
@@ -50,7 +51,11 @@ const burgerConstructorSlice = createSlice({
       { payload }: PayloadAction<{ from: number; to: number }>
     ) => {
       const { from, to } = payload;
-      state.constructorItems.ingredients.splice(to, 0, state.constructorItems.ingredients.splice(from, 1)[0]);
+      state.constructorItems.ingredients.splice(
+        to,
+        0,
+        state.constructorItems.ingredients.splice(from, 1)[0]
+      );
     }
   },
   selectors: {
@@ -72,7 +77,7 @@ const burgerConstructorSlice = createSlice({
       .addCase(makeOrder.fulfilled, (sliceState, action) => {
         sliceState.loading = false;
         sliceState.orderModalData = action.payload.order;
-        sliceState.constructorItems = {bun: null, ingredients: []};
+        sliceState.constructorItems = { bun: null, ingredients: [] };
         sliceState.error = null;
       });
   }
@@ -82,8 +87,8 @@ export const makeOrder = createAsyncThunk(
   'burgerConstructor/makeOrder',
   async (_, { rejectWithValue }) => {
     const constructorIngredients = useSelector(selectBurgerIngredients);
-    const ingredients = constructorIngredients.ingredients.push(constructorIngredients.bun as TConstructorIngredient)
-    const ingredientsId = Array.from(ingredients, (item)=> item.id)
+    const ingredientsId = Array.from(constructorIngredients.ingredients, item => item._id)
+    ingredientsId.push(constructorIngredients.bun?._id as string)
     try {
       const response = await orderBurgerApi(ingredientsId);
       return response;
@@ -93,7 +98,12 @@ export const makeOrder = createAsyncThunk(
   }
 );
 
-export const { selectBurgerIngredients, selectIsLoading, selectModalData, selectOrderRequest } = burgerConstructorSlice.selectors;
+export const {
+  selectBurgerIngredients,
+  selectIsLoading,
+  selectModalData,
+  selectOrderRequest
+} = burgerConstructorSlice.selectors;
 
 export const burgerConstructorReducer = burgerConstructorSlice.reducer;
 

@@ -9,7 +9,7 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { deleteCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 export interface UserState {
   user: TUser | null;
@@ -105,6 +105,8 @@ export const registerUser = createAsyncThunk(
   async (data: TRegisterData, { rejectWithValue }) => {
     try {
       const registerData = await registerUserApi(data);
+      setCookie('refreshToken', registerData.refreshToken);
+      setCookie('accessToken', registerData.accessToken);
       return registerData;
     } catch (error) {
       return rejectWithValue('Ошибка при регистрации');
@@ -117,6 +119,8 @@ export const loginUser = createAsyncThunk(
   async (data: TLoginData, { rejectWithValue }) => {
     try {
       const loginData = await loginUserApi(data);
+      setCookie('refreshToken', loginData.refreshToken);
+      setCookie('accessToken', loginData.accessToken);
       return loginData;
     } catch (error) {
       return rejectWithValue('Ошибка при регистрации');
@@ -154,7 +158,7 @@ export const logout = createAsyncThunk(
     try {
       await logoutApi();
       deleteCookie('accessToken');
-      localStorage.removeItem('refreshToken');
+      deleteCookie('refreshToken');
     } catch (error) {
       return rejectWithValue('Ошибка при выходе');
     }
