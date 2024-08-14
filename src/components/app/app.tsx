@@ -45,6 +45,7 @@ const App = () => {
         <Route path='reset-password' element={<ResetPassword />} />
         <Route path='profile' element={<Profile />} />
         <Route path='profile/orders' element={<ProfileOrders />} />
+        <Route path='ingredients/:id' element={<IngredientDetails />}/>
         <Route path='*' element={<NotFound404 />} />
       </Routes>
       {backgroundLocation && (

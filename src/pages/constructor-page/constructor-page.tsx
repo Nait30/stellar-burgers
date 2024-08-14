@@ -10,10 +10,10 @@ import {
   getIngredients,
   selectIsLoading
 } from '../../services/slices/ingridientsSlice';
+import { useLocation } from 'react-router-dom';
 
 export const ConstructorPage: FC = () => {
   const isIngredientsLoading = useSelector(selectIsLoading);
-
   /** TODO: взять переменную из стора */
 
   return (
