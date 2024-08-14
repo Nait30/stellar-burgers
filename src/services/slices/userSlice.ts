@@ -76,6 +76,7 @@ const userSlice = createSlice({
       .addCase(getUser.rejected, (sliceState, action) => {
         sliceState.loading = false;
         sliceState.error = action.payload as string;
+        sliceState.authChecked = true;
       })
       .addCase(getUser.fulfilled, (sliceState, action) => {
         sliceState.loading = false;

@@ -38,18 +38,6 @@ export const getOrder = createAsyncThunk(
   }
 );
 
-export const makeOrder = createAsyncThunk(
-  'order/makeOrder',
-  async (data: string[], { rejectWithValue }) => {
-    try {
-      const response = await orderBurgerApi(data);
-      return response;
-    } catch (error) {
-      return rejectWithValue('Ошибка при оформлении заказа');
-    }
-  }
-);
-
 export const getOrders = createAsyncThunk(
   'order/getOrders',
   async (_, { rejectWithValue }) => {

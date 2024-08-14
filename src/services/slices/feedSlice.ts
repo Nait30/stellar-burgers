@@ -1,6 +1,7 @@
 import { getFeedsApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TOrdersData } from '@utils-types';
+import { useSelector } from '../store';
 
 export interface FeedState extends TOrdersData {
   loading: boolean;
@@ -56,6 +57,9 @@ export const getFeed = createAsyncThunk(
     }
   }
 );
+
+export const selectOrder = (number: string | undefined) =>
+  useSelector(selectOrders).find((order) => String(order.number) === number);
 
 export const {
   selectIsLoading,
