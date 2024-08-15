@@ -20,6 +20,7 @@ import { getIngredients } from '../../services/slices/ingridientsSlice';
 import { getFeed } from '../../services/slices/feedSlice';
 import { getUser } from '../../services/slices/userSlice';
 import { ProtectedRoute } from '../ProtectedRoute/protectedRoute';
+import { getOrders } from '../../services/slices/orderSlice';
 
 const App = () => {
   const navigate = useNavigate();
@@ -27,13 +28,15 @@ const App = () => {
   const closeModal = () => {
     navigate(-1);
   };
-  const backgroundLocation = location.state?.backgroundLocation;
+  const backgroundLocation = location.state?.background;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
+    dispatch(getOrders());
+    dispatch(getFeed());
   }, [dispatch]);
 
   return (
@@ -100,6 +103,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
       {backgroundLocation && (

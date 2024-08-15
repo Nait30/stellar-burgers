@@ -56,6 +56,10 @@ const burgerConstructorSlice = createSlice({
         0,
         state.constructorItems.ingredients.splice(from, 1)[0]
       );
+    },
+    deleteOrderModalData: (sliceState) => {
+      sliceState.orderModalData = null;
+      sliceState.orderRequest = false;
     }
   },
   selectors: {
@@ -69,6 +73,7 @@ const burgerConstructorSlice = createSlice({
       .addCase(makeOrder.pending, (sliceState) => {
         sliceState.loading = true;
         sliceState.error = null;
+        sliceState.orderRequest = true;
       })
       .addCase(makeOrder.rejected, (sliceState, action) => {
         sliceState.orderRequest = false;
@@ -85,12 +90,9 @@ const burgerConstructorSlice = createSlice({
 
 export const makeOrder = createAsyncThunk(
   'burgerConstructor/makeOrder',
-  async (_, { rejectWithValue }) => {
-    const constructorIngredients = useSelector(selectBurgerIngredients);
-    const ingredientsId = Array.from(constructorIngredients.ingredients, item => item._id)
-    ingredientsId.push(constructorIngredients.bun?._id as string)
+  async (data: string[], { rejectWithValue }) => {
     try {
-      const response = await orderBurgerApi(ingredientsId);
+      const response = await orderBurgerApi(data);
       return response;
     } catch (error) {
       return rejectWithValue('Ошибка при оформлении заказа');

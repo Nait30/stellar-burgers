@@ -39,7 +39,8 @@ const userSlice = createSlice({
   selectors: {
     selectUser: (sliceState) => sliceState.user,
     selectIsAuthChecked: (sliceState) => sliceState.authChecked,
-    selectIsLoading: (sliceState) => sliceState.loading
+    selectIsLoading: (sliceState) => sliceState.loading,
+    selectError: (sliceState) => sliceState.error
   },
   extraReducers: (builder) => {
     builder
@@ -96,6 +97,21 @@ const userSlice = createSlice({
         sliceState.user = null;
         sliceState.error = null;
         sliceState.authChecked = true;
+        deleteCookie('accessToken');
+        localStorage.removeItem('refreshToken');
+      })
+      .addCase(updateUser.pending, (sliceState) => {
+        sliceState.loading = true;
+      })
+      .addCase(updateUser.rejected, (sliceState, action) => {
+        sliceState.loading = false;
+        sliceState.error = action.payload as string;
+      })
+      .addCase(updateUser.fulfilled, (sliceState, action) => {
+        sliceState.loading = false;
+        sliceState.user = action.payload.user;
+        sliceState.error = null;
+        sliceState.authChecked = true;
       });
   }
 });
@@ -105,7 +121,7 @@ export const registerUser = createAsyncThunk(
   async (data: TRegisterData, { rejectWithValue }) => {
     try {
       const registerData = await registerUserApi(data);
-      setCookie('refreshToken', registerData.refreshToken);
+      localStorage.setItem('refreshToken', registerData.refreshToken);
       setCookie('accessToken', registerData.accessToken);
       return registerData;
     } catch (error) {
@@ -119,7 +135,7 @@ export const loginUser = createAsyncThunk(
   async (data: TLoginData, { rejectWithValue }) => {
     try {
       const loginData = await loginUserApi(data);
-      setCookie('refreshToken', loginData.refreshToken);
+      localStorage.setItem('refreshToken', loginData.refreshToken);
       setCookie('accessToken', loginData.accessToken);
       return loginData;
     } catch (error) {
@@ -157,15 +173,13 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await logoutApi();
-      deleteCookie('accessToken');
-      deleteCookie('refreshToken');
     } catch (error) {
       return rejectWithValue('Ошибка при выходе');
     }
   }
 );
 
-export const { selectIsAuthChecked, selectIsLoading, selectUser } =
+export const { selectIsAuthChecked, selectIsLoading, selectUser, selectError } =
   userSlice.selectors;
 
 export const userSliceReducer = userSlice.reducer;

@@ -6,11 +6,12 @@ import { selectOrder } from '../../services/slices/feedSlice';
 import { useParams } from 'react-router-dom';
 import { useSelector } from '../../services/store';
 import { selectIngridients } from '../../services/slices/ingridientsSlice';
+import { selectUserOrder } from '../../services/slices/orderSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const { number } = useParams();
-  const orderData = selectOrder(number);
+  const orderData = selectOrder(number) || selectUserOrder(number);
   const ingredients: TIngredient[] = useSelector(selectIngridients);
 
   /* Готовим данные для отображения */
