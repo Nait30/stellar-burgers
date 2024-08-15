@@ -1,11 +1,12 @@
-import { getFeedsApi } from '@api';
+import { getFeedsApi, getOrderByNumberApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TOrdersData } from '@utils-types';
+import { TConstructorIngredient, TOrder, TOrdersData } from '@utils-types';
 import { useSelector } from '../store';
 
 export interface FeedState extends TOrdersData {
   loading: boolean;
   error: string | null;
+  modalOrder: TOrder | null;
 }
 
 const initialState: FeedState = {
@@ -13,7 +14,8 @@ const initialState: FeedState = {
   orders: [],
   total: 0,
   totalToday: 0,
-  error: null
+  error: null,
+  modalOrder: null
 };
 
 const feedSlice = createSlice({
@@ -25,7 +27,8 @@ const feedSlice = createSlice({
     selectOrders: (sliceState) => sliceState.orders,
     selectTotal: (sliceState) => sliceState.total,
     selectTotalToday: (sliceState) => sliceState.totalToday,
-    selectFeed: (sliceState) => sliceState
+    selectFeed: (sliceState) => sliceState,
+    selectModalOrder: (sliceState) => sliceState.modalOrder
   },
   extraReducers: (builder) => {
     builder
@@ -42,6 +45,18 @@ const feedSlice = createSlice({
         sliceState.total = action.payload.total;
         sliceState.totalToday = action.payload.totalToday;
         sliceState.orders = action.payload.orders;
+      })
+      .addCase(getOrder.pending, (sliceState) => {
+        sliceState.loading = true;
+        sliceState.error = null;
+      })
+      .addCase(getOrder.rejected, (sliceState, action) => {
+        sliceState.loading = false;
+        sliceState.error = action.error.message as string | null;
+      })
+      .addCase(getOrder.fulfilled, (sliceState, action) => {
+        sliceState.loading = false;
+        sliceState.modalOrder = action.payload.orders[0];
       });
   }
 });
@@ -58,6 +73,18 @@ export const getFeed = createAsyncThunk(
   }
 );
 
+export const getOrder = createAsyncThunk(
+  'feed/getOrder',
+  async (number: number, { rejectWithValue }) => {
+    try {
+      const response = await getOrderByNumberApi(number);
+      return response;
+    } catch (error) {
+      return rejectWithValue('Ошибка при получении ленты');
+    }
+  }
+);
+
 export const selectOrder = (number: string | undefined) =>
   useSelector(selectOrders).find((order) => String(order.number) === number);
 
@@ -66,7 +93,8 @@ export const {
   selectOrders,
   selectTotal,
   selectTotalToday,
-  selectFeed
+  selectFeed,
+  selectModalOrder
 } = feedSlice.selectors;
 
 export const feedSliceReducer = feedSlice.reducer;

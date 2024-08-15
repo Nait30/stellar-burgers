@@ -36,7 +36,6 @@ const App = () => {
     dispatch(getIngredients());
     dispatch(getUser());
     dispatch(getOrders());
-    dispatch(getFeed());
   }, [dispatch]);
 
   return (
