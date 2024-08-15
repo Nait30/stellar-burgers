@@ -6,19 +6,24 @@ import {
   getFeed,
   getOrder,
   selectModalOrder,
-  selectOrder
+  selectOrder,
+  selectOrders as selectFeedOrders
 } from '../../services/slices/feedSlice';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
 import { selectIngridients } from '../../services/slices/ingridientsSlice';
-import { selectUserOrder } from '../../services/slices/orderSlice';
+import { selectOrders as selectUserOrder } from '../../services/slices/orderSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const { number } = useParams();
   const orderData =
-    selectOrder(number) ||
-    selectUserOrder(number) ||
+    useSelector(selectFeedOrders).find(
+      (item) => String(item.number) === number
+    ) ||
+    useSelector(selectUserOrder).find(
+      (item) => String(item.number) === number
+    ) ||
     useSelector(selectModalOrder);
   const ingredients: TIngredient[] = useSelector(selectIngridients);
   const dispatch = useDispatch();

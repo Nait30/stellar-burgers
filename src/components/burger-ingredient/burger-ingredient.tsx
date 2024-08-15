@@ -14,8 +14,7 @@ export const BurgerIngredient: FC<TBurgerIngredientProps> = memo(
     const handleAdd = () => {
       dispatch(
         burgerConstructorActions.addIngridient({
-          ...ingredient,
-          id: ingredient._id
+          ...ingredient
         })
       );
     };

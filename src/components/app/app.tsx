@@ -19,7 +19,7 @@ import { useEffect } from 'react';
 import { getIngredients } from '../../services/slices/ingridientsSlice';
 import { getFeed } from '../../services/slices/feedSlice';
 import { getUser } from '../../services/slices/userSlice';
-import { ProtectedRoute } from '../ProtectedRoute/protectedRoute';
+import { ProtectedRoute } from '../protected-route/protected-route';
 import { getOrders } from '../../services/slices/orderSlice';
 
 const App = () => {
