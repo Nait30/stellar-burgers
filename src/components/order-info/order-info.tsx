@@ -13,23 +13,19 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
 import { selectIngridients } from '../../services/slices/ingridientsSlice';
 import { selectOrders as selectUserOrder } from '../../services/slices/orderSlice';
+import { selectOrderById } from '@selectors';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
   const { number } = useParams();
-  const orderData =
-    useSelector(selectFeedOrders).find(
-      (item) => String(item.number) === number
-    ) ||
-    useSelector(selectUserOrder).find(
-      (item) => String(item.number) === number
-    ) ||
-    useSelector(selectModalOrder);
+  const orderData = useSelector(selectOrderById(Number(number)));
   const ingredients: TIngredient[] = useSelector(selectIngridients);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrder(Number(number)));
+    if (!orderData) {
+      dispatch(getOrder(Number(number)));
+    }
   }, [dispatch]);
 
   /* Готовим данные для отображения */
