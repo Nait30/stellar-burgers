@@ -8,11 +8,11 @@ import {
   selectModalOrder,
   selectOrder,
   selectOrders as selectFeedOrders
-} from '../../services/slices/feedSlice';
+} from '../../services/slices/feedSlice/feedSlice';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
-import { selectIngridients } from '../../services/slices/ingridientsSlice';
-import { selectOrders as selectUserOrder } from '../../services/slices/orderSlice';
+import { selectIngridients } from '../../services/slices/ingridientsSlice/ingridientsSlice';
+import { selectOrders as selectUserOrder } from '../../services/slices/orderSlice/orderSlice';
 import { selectOrderById } from '@selectors';
 
 export const OrderInfo: FC = () => {

@@ -1,7 +1,7 @@
-import { getFeedsApi, getOrderByNumberApi } from '@api';
+import { getFeedsApi, getOrderByNumberApi } from '../../../utils/burger-api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TOrder, TOrdersData } from '@utils-types';
-import { useSelector } from '../store';
+import { useSelector } from '../../store';
 
 export interface FeedState extends TOrdersData {
   loading: boolean;

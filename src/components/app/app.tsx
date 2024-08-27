@@ -16,11 +16,9 @@ import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
-import { getIngredients } from '../../services/slices/ingridientsSlice';
-import { getFeed } from '../../services/slices/feedSlice';
-import { getUser } from '../../services/slices/userSlice';
+import { getIngredients } from '../../services/slices/ingridientsSlice/ingridientsSlice';
 import { ProtectedRoute } from '../protected-route/protected-route';
-import { getOrders } from '../../services/slices/orderSlice';
+import { getUser } from '../../services/slices/userSlice/userSlice';
 
 const App = () => {
   const navigate = useNavigate();

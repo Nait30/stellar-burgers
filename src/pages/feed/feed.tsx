@@ -6,7 +6,7 @@ import {
   getFeed,
   selectIsLoading,
   selectOrders
-} from '../../services/slices/feedSlice';
+} from '../../services/slices/feedSlice/feedSlice';
 import { useDispatch, useSelector } from '../../services/store';
 
 export const Feed: FC = () => {

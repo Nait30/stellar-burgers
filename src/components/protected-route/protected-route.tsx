@@ -1,12 +1,13 @@
 import { Children, ReactElement } from 'react';
 import { useSelector } from '../../services/store';
+
+import { Preloader } from '@ui';
+import { Navigate, useLocation } from 'react-router-dom';
 import {
   selectIsAuthChecked,
   selectIsLoading,
   selectUser
-} from '../../services/slices/userSlice';
-import { Preloader } from '@ui';
-import { Navigate, useLocation } from 'react-router-dom';
+} from '../../services/slices/userSlice/userSlice';
 
 type ProtectedRouteProps = {
   children: ReactElement;

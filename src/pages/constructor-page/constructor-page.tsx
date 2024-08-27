@@ -9,7 +9,7 @@ import { FC, useEffect } from 'react';
 import {
   getIngredients,
   selectIsLoading
-} from '../../services/slices/ingridientsSlice';
+} from '../../services/slices/ingridientsSlice/ingridientsSlice';
 import { useLocation } from 'react-router-dom';
 
 export const ConstructorPage: FC = () => {

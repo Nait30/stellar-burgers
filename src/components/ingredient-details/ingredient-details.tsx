@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import {
   selectIngredient,
   selectIngridients
-} from '../../services/slices/ingridientsSlice';
+} from '../../services/slices/ingridientsSlice/ingridientsSlice';
 
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
