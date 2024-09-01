@@ -9,7 +9,7 @@ import {
 } from '../../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../../../utils/cookie';
+import { deleteCookie, getCookie, setCookie } from '../../../utils/cookie';
 
 export interface UserState {
   user: TUser | null;
@@ -145,11 +145,15 @@ export const loginUser = createAsyncThunk(
 export const getUser = createAsyncThunk(
   'user/getUser',
   async (_, { rejectWithValue }) => {
-    try {
-      const data = await getUserApi();
-      return data;
-    } catch (error) {
-      return rejectWithValue('Ошибка при получении данных пользователя');
+    if (getCookie('accessToken')) {
+      try {
+        const data = await getUserApi();
+        return data;
+      } catch (error) {
+        return rejectWithValue('Ошибка при получении данных пользователя');
+      }
+    } else {
+      return { user: null };
     }
   }
 );

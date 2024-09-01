@@ -247,9 +247,7 @@ describe('test userSlice', () => {
         error: null
       };
       const state = userSliceReducer(
-        {...initialState,
-          user: userTest
-        },
+        { ...initialState, user: userTest },
         updateUser.pending('', testRegisterData)
       );
       expect(state).toEqual(expectedState);
