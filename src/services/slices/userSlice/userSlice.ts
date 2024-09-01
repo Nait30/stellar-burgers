@@ -76,7 +76,7 @@ const userSlice = createSlice({
       })
       .addCase(getUser.rejected, (sliceState, action) => {
         sliceState.loading = false;
-        sliceState.error = action.payload as string;
+        sliceState.error = action.error.message as string;
         sliceState.authChecked = true;
       })
       .addCase(getUser.fulfilled, (sliceState, action) => {
@@ -90,22 +90,20 @@ const userSlice = createSlice({
       })
       .addCase(logout.rejected, (sliceState, action) => {
         sliceState.loading = false;
-        sliceState.error = action.payload as string;
+        sliceState.error = action.error.message as string;
       })
-      .addCase(logout.fulfilled, (sliceState, action) => {
+      .addCase(logout.fulfilled, (sliceState) => {
         sliceState.loading = false;
         sliceState.user = null;
         sliceState.error = null;
         sliceState.authChecked = true;
-        deleteCookie('accessToken');
-        localStorage.removeItem('refreshToken');
       })
       .addCase(updateUser.pending, (sliceState) => {
         sliceState.loading = true;
       })
       .addCase(updateUser.rejected, (sliceState, action) => {
         sliceState.loading = false;
-        sliceState.error = action.payload as string;
+        sliceState.error = action.error.message as string;
       })
       .addCase(updateUser.fulfilled, (sliceState, action) => {
         sliceState.loading = false;
