@@ -1,17 +1,11 @@
-import { getOrders, orderSliceReducer, OrderState } from './orderSlice';
+import { getOrders, initialState, orderSliceReducer, OrderState } from './orderSlice';
 
 describe('testOrders', () => {
-  const initialState: OrderState = {
-    orders: [],
-    loading: false,
-    error: null
-  };
 
   test('loading should be true', () => {
     const expectedState = {
-      orders: [],
-      loading: true,
-      error: null
+      ...initialState,
+      loading: true
     };
     const state = orderSliceReducer(initialState, getOrders.pending(''));
     expect(state).toEqual(expectedState);
@@ -21,8 +15,7 @@ describe('testOrders', () => {
     const error = new Error('test');
 
     const expectedState: OrderState = {
-      orders: [],
-      loading: false,
+      ...initialState,
       error: error.message
     };
 
@@ -47,9 +40,8 @@ describe('testOrders', () => {
       }
     ];
     const expectedState = {
-      orders: testOrders,
-      loading: false,
-      error: null
+      ...initialState,
+      orders: testOrders
     };
     const state = orderSliceReducer(
       initialState,

@@ -1,17 +1,12 @@
 import {
   getIngredients,
   IngredientsState,
-  ingridientsReducer
+  ingridientsReducer,
+  initialState
 } from './ingridientsSlice';
 
 describe('testIngredientsSlice', () => {
-  const initialState: IngredientsState = {
-    ingridients: [],
-    loading: false,
-    error: null
-  };
-
-  test('loading should be true', () => {
+test('loading should be true', () => {
     const expectedState = {
       ingridients: [],
       loading: true,

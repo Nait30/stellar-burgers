@@ -9,7 +9,7 @@ export interface FeedState extends TOrdersData {
   modalOrder: TOrder | null;
 }
 
-const initialState: FeedState = {
+export const initialState: FeedState = {
   loading: false,
   orders: [],
   total: 0,

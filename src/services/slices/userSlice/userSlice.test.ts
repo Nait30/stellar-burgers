@@ -1,6 +1,7 @@
 import { TAuthResponse, TRegisterData } from '@api';
 import {
   getUser,
+  initialState,
   loginUser,
   logout,
   registerUser,
@@ -11,12 +12,6 @@ import {
 import { TUser } from '@utils-types';
 
 describe('test userSlice', () => {
-  const initialState: UserState = {
-    user: null,
-    authChecked: false,
-    loading: false,
-    error: null
-  };
   const testApiResponse: TAuthResponse = {
     success: true,
     refreshToken: 'test',

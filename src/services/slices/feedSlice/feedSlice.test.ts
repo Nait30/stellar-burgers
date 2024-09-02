@@ -1,16 +1,7 @@
-import { feedSliceReducer, FeedState, getFeed } from './feedSlice';
+import { feedSliceReducer, FeedState, getFeed, initialState } from './feedSlice';
 
 describe('feedSliceTest', () => {
-  const initialState: FeedState = {
-    loading: false,
-    error: null,
-    modalOrder: null,
-    orders: [],
-    total: 0,
-    totalToday: 0
-  };
-
-  test('loading should be true', () => {
+test('loading should be true', () => {
     const state = feedSliceReducer(initialState, getFeed.pending(''));
 
     expect(state).toEqual({
@@ -64,12 +55,8 @@ describe('feedSliceTest', () => {
     const error = new Error('test');
 
     const expectedState: FeedState = {
-      loading: false,
-      error: error.message,
-      modalOrder: null,
-      orders: [],
-      total: 0,
-      totalToday: 0
+      ...initialState,
+      error: error.message
     };
 
     const state = feedSliceReducer(initialState, getFeed.rejected(error, ''));
