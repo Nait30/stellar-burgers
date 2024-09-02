@@ -1,7 +1,11 @@
 import { orderBurgerApi } from '../../../utils/burger-api';
-import {createAsyncThunk, createSlice, nanoid} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { TConstructorIngredient, TIngredient, TOrder } from '../../../utils/types';
+import {
+  TConstructorIngredient,
+  TIngredient,
+  TOrder
+} from '../../../utils/types';
 
 export interface BurgerConstructorState {
   constructorItems: {

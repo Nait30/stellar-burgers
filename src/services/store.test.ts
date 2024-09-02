@@ -5,10 +5,9 @@ import { feedSliceReducer } from './slices/feedSlice/feedSlice';
 import { userSliceReducer } from './slices/userSlice/userSlice';
 import { orderSliceReducer } from './slices/orderSlice/orderSlice';
 
-
 describe('test store', () => {
   test('store initialization', () => {
-    const initAction = {type: '@@INIT'}
+    const initAction = { type: '@@INIT' };
 
     const store = combineReducers({
       ingridients: ingridientsReducer,
