@@ -55,7 +55,6 @@ const testMain = {
   image_large: 'https://code.s3.yandex.net/react/code/bun-01-large.png'
 };
 
-
 describe('test constructor', () => {
   test('should add ingredient', () => {
     const state = burgerConstructorReducer(
@@ -96,23 +95,21 @@ describe('test constructor', () => {
       constructorItems: {
         bun: null,
         ingredients: [testMain, testSauce]
-      },  };
+      }
+    };
 
     const state = burgerConstructorReducer(
       testInitialState,
       burgerConstructorActions.moveIngredient({ from: 0, to: 1 })
     );
-    expect(state.constructorItems.ingredients).toEqual([
-      testSauce,
-      testMain
-    ]);
+    expect(state.constructorItems.ingredients).toEqual([testSauce, testMain]);
   });
 
   test('makeOrderPending', () => {
     const expectedState: BurgerConstructorState = {
-        ...initialState,
-        orderRequest: true,
-        loading: true
+      ...initialState,
+      orderRequest: true,
+      loading: true
     };
 
     const state = burgerConstructorReducer(

@@ -1,7 +1,11 @@
-import { getOrders, initialState, orderSliceReducer, OrderState } from './orderSlice';
+import {
+  getOrders,
+  initialState,
+  orderSliceReducer,
+  OrderState
+} from './orderSlice';
 
 describe('testOrders', () => {
-
   test('loading should be true', () => {
     const expectedState = {
       ...initialState,

@@ -6,7 +6,7 @@ import {
 } from './ingridientsSlice';
 
 describe('testIngredientsSlice', () => {
-test('loading should be true', () => {
+  test('loading should be true', () => {
     const expectedState = {
       ingridients: [],
       loading: true,

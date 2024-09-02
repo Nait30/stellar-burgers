@@ -1,7 +1,12 @@
-import { feedSliceReducer, FeedState, getFeed, initialState } from './feedSlice';
+import {
+  feedSliceReducer,
+  FeedState,
+  getFeed,
+  initialState
+} from './feedSlice';
 
 describe('feedSliceTest', () => {
-test('loading should be true', () => {
+  test('loading should be true', () => {
     const state = feedSliceReducer(initialState, getFeed.pending(''));
 
     expect(state).toEqual({
