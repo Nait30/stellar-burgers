@@ -33,3 +33,9 @@ npm start
 ```
 
 После этого переходим по адресу http://localhost:4000/ и видим главную страницу. 
+
+
+Запуск storybook
+```bash
+npm run storybook
+```
